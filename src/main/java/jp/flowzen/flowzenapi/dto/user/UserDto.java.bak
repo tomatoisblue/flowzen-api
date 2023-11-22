@@ -1,0 +1,86 @@
+package jp.flowzen.flowzenapi.dto.user;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+
+/**
+ * UserDto
+ */
+public class UserDto {
+  private final static String DEFAULT_ROLENAME = "GENERAL";
+
+  private Long id;
+
+  @NotBlank
+  @NotNull
+  @Size(min = 4, max = 20)
+  private String username;
+
+  @NotBlank
+  @NotNull
+  @Size(max = 255)
+  private String email;
+
+  @NotBlank
+  @NotNull
+  @Size(max = 120)
+  private String password;
+
+  @NotBlank
+  @NotNull
+  @Size(max = 20)
+  private String rolename;
+
+
+  public UserDto(String username, String email, String password) throws Exception {
+    try {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+      this.rolename = DEFAULT_ROLENAME;
+    }
+  }
+
+
+  /*
+   * Getters and Setter
+   */
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getRolename() {
+    return rolename;
+  }
+
+  public void setRolename(String rolename) {
+    this.rolename = rolename;
+  }
+}
