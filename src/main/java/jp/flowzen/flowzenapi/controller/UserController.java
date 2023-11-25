@@ -89,16 +89,16 @@ public class UserController {
   }
 
 
-  @GetMapping("/search")
-  public String searchUser(@RequestParam("query") String query, @RequestHeader(value = "referer", required = false) final String referer, Model model) {
+  // @GetMapping("/search")
+  // public String searchUser(@RequestParam("query") String query, @RequestHeader(value = "referer", required = false) final String referer, Model model) {
     // if (query.isEmpty()) {
     //   return "redirect:" + referer;
     // }
 
-    List<User> userList= userSearchService.searchUser(query);
-    model.addAttribute("userList", userList);
-    return "user/search-result";
-  }
+  //   List<User> userList= userSearchService.searchUser(query);
+  //   model.addAttribute("userList", userList);
+  //   return "user/search-result";
+  // }
 
   @PostMapping("/verify-token")
   public ResponseEntity<?> verifyToken() {
