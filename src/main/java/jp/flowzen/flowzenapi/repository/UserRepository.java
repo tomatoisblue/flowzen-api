@@ -17,7 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   public User findByUsername(String username);
 
+  public User findByUsernameIgnoreCase(String username);
+
   public User findByEmail(String email);
+
 
   @Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE %:query%")
   public List<User> findByUsernameContainingIgnoreCase(String query);
