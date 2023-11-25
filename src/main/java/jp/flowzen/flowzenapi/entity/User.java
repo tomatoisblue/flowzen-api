@@ -21,7 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  * User
  */
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
   private final static String DEFAULT_ROLENAME = "GENERAL";
 
