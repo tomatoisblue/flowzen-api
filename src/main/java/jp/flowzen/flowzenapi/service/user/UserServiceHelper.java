@@ -19,7 +19,8 @@ public class UserServiceHelper {
   }
 
   public boolean usernameExists(String username) {
-    if (userRepository.findByUsername(username) == null) {
+    // if (userRepository.findByUsername(username) == null) {
+    if (userRepository.findByUsernameIgnoreCase(username) == null) {
       return false;
     }
     return true;
