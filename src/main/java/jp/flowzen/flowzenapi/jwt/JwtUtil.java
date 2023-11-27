@@ -2,6 +2,7 @@ package jp.flowzen.flowzenapi.jwt;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ import jp.flowzen.flowzenapi.repository.UserRepository;
  */
 @Component
 public class JwtUtil {
+
+  @Value("${hmac.secret}")
+  private String hmacSecret;
 
   private UserRepository userRepository;
 
@@ -96,7 +100,8 @@ public class JwtUtil {
                   .withClaim("userId", userId)
                   .withClaim("username", username)
                   .withClaim("role", role)
-                  .sign(Algorithm.HMAC256("CfNeddheorhDgnUfYqm8pjT5lykpTMUi"));
+                  .sign(Algorithm.HMAC256(hmacSecret));
+                  // .sign(Algorithm.HMAC256("CfNeddheorhDgnUfYqm8pjT5lykpTMUi"));
     } catch(Exception e) {
       token = null;
     }
@@ -114,7 +119,8 @@ public class JwtUtil {
                   .withExpiresAt(new Date(issuedAt.getTime() + 1000 * 60 * 60))
                   .withClaim("username", username)
                   .withClaim("role", role)
-                  .sign(Algorithm.HMAC256("CfNeddheorhDgnUfYqm8pjT5lykpTMUi"));
+                  .sign(Algorithm.HMAC256(hmacSecret));
+                  // .sign(Algorithm.HMAC256("CfNeddheorhDgnUfYqm8pjT5lykpTMUi"));
     } catch(Exception e) {
       token = null;
     }

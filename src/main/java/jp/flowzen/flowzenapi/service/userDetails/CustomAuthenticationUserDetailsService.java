@@ -1,5 +1,6 @@
 package jp.flowzen.flowzenapi.service.userDetails;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,9 @@ import jp.flowzen.flowzenapi.repository.UserRepository;
 @Service
 public class CustomAuthenticationUserDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
+  @Value("${hmac.secret}")
+  private String hmacSecret;
+
   private UserRepository userRepository;
   private UserDetailsService userDetailsService;
 
@@ -41,7 +45,8 @@ public class CustomAuthenticationUserDetailsService implements AuthenticationUse
     DecodedJWT decodedJwt;
 
     try {
-      decodedJwt = JWT.require(Algorithm.HMAC256("CfNeddheorhDgnUfYqm8pjT5lykpTMUi")).build().verify(token.getPrincipal().toString());
+      // decodedJwt = JWT.require(Algorithm.HMAC256("CfNeddheorhDgnUfYqm8pjT5lykpTMUi")).build().verify(token.getPrincipal().toString());
+      decodedJwt = JWT.require(Algorithm.HMAC256(hmacSecret)).build().verify(token.getPrincipal().toString());
     } catch (JWTDecodeException e) {
       throw new BadCredentialsException("Authorization header token is invalid");
     } catch (TokenExpiredException e) {
