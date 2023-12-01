@@ -15,7 +15,7 @@ import jp.flowzen.flowzenapi.repository.UserRepository;
 import jp.flowzen.flowzenapi.service.user.UserServiceHelper;
 
 @ExtendWith(MockitoExtension.class)
-public class UsernameExistsTest {
+public class EmailExistsTest {
   @Mock
   private UserRepository userRepository;
 
@@ -26,42 +26,39 @@ public class UsernameExistsTest {
   private UserServiceHelper userServiceHelper;
 
   @Test
-  public void usernameExists_ShouldReturnTrueWhenUserExists() {
+  public void emailExists_ShouldReturnTrueWhenUserExists() {
     // Given
-    String existingUsername = "existingUser";
-    User user = new User(existingUsername, "test@example.com", "7isTuGob8Z8G8%Lz8ZGB");
+    String existingEmail = "existing@example.com";
+    User user = new User("testuser", existingEmail, "7isTuGob8Z8G8%Lz8ZGB");
 
     // Mock the behavior of userRepository
-    when(userRepository.findByUsernameIgnoreCase(existingUsername)).thenReturn(user);
+    when(userRepository.findByEmailIgnoreCase(existingEmail)).thenReturn(user);
 
     // Create UserServiceHelper with mocked dependencies
     UserServiceHelper userServiceHelper = new UserServiceHelper(passwordEncoder, userRepository);
 
     //When
-    boolean exists = userServiceHelper.usernameExists(existingUsername);
+    boolean exists = userServiceHelper.emailExists(existingEmail);
 
     // Then
     assertThat(exists).isTrue();
   }
 
   @Test
-  public void usernameExists_ShouldReturnFalseWhenUserDoesNotExist() {
+  public void emailExists_ShouldReturnFalseWhenUserDoesNotExist() {
     // Given
-    String nonExistingUsername = "nonExistingUser";
+    String nonExistingEmail = "non-existing@example.com";
 
     // Mock the behavior of userRepository
-    when(userRepository.findByUsernameIgnoreCase(nonExistingUsername)).thenReturn(null);
+    when(userRepository.findByEmailIgnoreCase(nonExistingEmail)).thenReturn(null);
 
     // Create UserServiceHelper with mocked dependencies
     UserServiceHelper userServiceHelper = new UserServiceHelper(passwordEncoder, userRepository);
 
     //When
-    boolean exists = userServiceHelper.usernameExists(nonExistingUsername);
+    boolean exists = userServiceHelper.emailExists(nonExistingEmail);
 
     // Then
     assertThat(exists).isFalse();
   }
-
-
-
 }

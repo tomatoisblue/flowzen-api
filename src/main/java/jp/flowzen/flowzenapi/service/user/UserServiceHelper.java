@@ -27,7 +27,8 @@ public class UserServiceHelper {
   }
 
   public boolean emailExists(String email) {
-    if (userRepository.findByEmail(email) == null) {
+    // if (userRepository.findByEmail(email) == null) {
+      if (userRepository.findByEmailIgnoreCase(email) == null) {
       return false;
     }
     return true;
